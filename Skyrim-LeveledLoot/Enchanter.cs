@@ -299,7 +299,7 @@ namespace LeveledLoot {
 
                             LeveledItemEntry entry = new();
                             entry.Data ??= new LeveledItemEntryData();
-                            
+
                             entry.Data.Count = 1;
                             entry.Data.Level = 1;
                             entry.Data.Reference.SetTo(extraList.FormKey);
@@ -338,7 +338,8 @@ namespace LeveledLoot {
                     }
                     enchantedVariants[key] = enchVariants;
                 } else {
-                    throw new Exception("No enchantment available.");
+                    // throw new Exception("No enchantment available.");
+                    return null;
                 }
 
             }
@@ -415,10 +416,13 @@ namespace LeveledLoot {
                             throw new Exception("Must be armor.");
                         }
                         if (!enchantedItemName.Contains(itemName)) {
-                            throw new Exception("Enchanted item name must contain base item name as substring.");
+                            // preferably log right here
+                            // throw new Exception("Enchanted item name must contain base item name as substring.");
+                            continue;
                         }
                         if (ench.IsNull) {
-                            throw new Exception("Enchanted item has no enchantment.");
+                            continue;
+                            // throw new Exception("Enchanted item has no enchantment.");
                         }
                         if (ench.TryResolve(Program.State.LinkCache, out var effectRecord)) {
                             if (effectRecord is IObjectEffectGetter objectEffectGetter) {
@@ -470,7 +474,8 @@ namespace LeveledLoot {
                                             throw new Exception("Enchanted item name must contain base item name as substring.");
                                         }
                                         if (ench.IsNull) {
-                                            throw new Exception("Enchanted item has no enchantment.");
+                                            continue;
+                                            // throw new Exception("Enchanted item has no enchantment.");
                                         }
                                         if (ench.TryResolve(Program.State.LinkCache, out var effectRecord)) {
                                             if (effectRecord is IObjectEffectGetter objectEffectGetter) {
